@@ -19,6 +19,7 @@ clear all
     promedio_cambio = mean(cambio_diario);
 fprintf('(1) El promedio del dólar es: %.2f\n', promedio);
 fprintf('(1) El cambio promedio del dólar es: %.8f\n', promedio_cambio);
+
 % (2)Identificar el valor máximo y mínimo de la función
     mx = max(database);
 fprintf('(2) El valor maximo del dólar es: %.2f\n', mx);
@@ -27,6 +28,7 @@ fprintf('(2) El valor minimo del dólar es: %.2f\n', mn);
 %xlswrite('DB Datos.xlsx',{'Promedio';'Mediana'},'Estadísticas','B2')
 %xlswrite('DB Datos.xlsx',[meanDatos;medianDatos],'Estadísticas','C2')
 %----------------------------------------------------------------
+
 % (3) Calcular el rango,
     rango = range(database);
 fprintf('(3) El valor rango del dólar es: %.2f\n', rango);
@@ -40,7 +42,16 @@ fprintf('(3) La Media armónica del dólar es: %.2f\n', media_armonica);
 % mediana, 
     mediana = median(dolar);
 fprintf('(3) La Mediana del dólar es: %.2f\n', mediana);
-% moda, desviación (estándar o típica y media), esperanza, 
+% moda, 
+    moda = mode(dolar);
+fprintf('(3) La Moda del dólar es: %.2f\n', moda);
+% desviación (estándar o típica
+    desviacion_estandar = std(dolar);
+fprintf('(3) La desviación típica del dólar es: %.2f\n', desviacion_estandar);
+% desviación media), 
+    desviacion_media = mean(abs(dolar - media_aritmetica));
+fprintf('(3) La desviación media del dólar es: %.2f\n', desviacion_media);    
+% esperanza, 
 % varianza, covarianza, coeficiente de variación (𝐶𝑉 =𝜎𝑥|𝑋̅|,𝜎𝑥 𝑑𝑒𝑠𝑣𝑖𝑎𝑐𝑖ó𝑛 
 % 𝑒𝑠𝑡á𝑛𝑑𝑎𝑟 𝑦 𝑋̅ 𝑚𝑒𝑑𝑖𝑎 𝑎𝑟𝑖𝑡𝑚é𝑡𝑖𝑐𝑎), coeficiente de
 % variación de Pearson (𝑟 = 𝑆𝑥 |𝑥̅|, 𝑠𝑖𝑒𝑛𝑑𝑜 𝑆𝑥 𝑙𝑎 𝑑𝑒𝑠𝑣𝑖𝑎𝑐𝑖ó𝑛 𝑡í𝑝𝑖𝑐𝑎 𝑦 𝑥̅ 𝑙𝑎 𝑚𝑒𝑑𝑖𝑎 
