@@ -78,13 +78,13 @@ fprintf('(3) La Coeficiente de variación de Pearson del dólar es: %.2f\n', coe
 %disp(media_aperturas);
 % coeficiente de asimetría (𝐴𝑆 = 𝑋̅− 𝑀0/𝑆, 𝑋̅ 𝑒𝑠 𝑙𝑎 𝑚𝑒𝑑𝑖𝑎 𝑎𝑟𝑖𝑡𝑚é𝑡𝑖𝑐𝑎, 
 % 𝑀0 𝑒𝑠 𝑙𝑎 𝑚𝑜𝑑𝑎 𝑦 𝑆 𝑒𝑠 𝑙𝑎 𝑑𝑒𝑠𝑣𝑖𝑎𝑐𝑖ó𝑛 𝑒𝑠𝑡á𝑛𝑑𝑎𝑟), 
-coef_asimetria = skewness(dolar)
+coef_asimetria = skewness(dolar);
 %disp(coef_asimetria);
-coefi_asimetria = ((media_aritmetica-moda)/desviacion_estandar)
+coefi_asimetria = ((media_aritmetica-moda)/desviacion_estandar);
 % kurtosis, 
-k = kurtosis(dolar)
+k = kurtosis(dolar);
 %kurtosis poblacional
-ku = kurtosis(dolar, 0)
+ku = kurtosis(dolar, 0);
 % la convolución y la correlación. 
 %cambio_dolar = dolarhisto.Cambio_dolar;
 % También deben calcular el número de índice, 
@@ -94,6 +94,11 @@ ku = kurtosis(dolar, 0)
 
 %----------------------------------------------------------------
 %% Lugar de Raíces (Cruces x Cero), Máximos Relativos y Mínimos Relativos
+% Utilizar la instrucción "find" o el "Teorema de Boltzman" 
+% 𝑓(𝑎) ∗ 𝑓(𝑏) < 0, 𝑐𝑜𝑛 𝑎, 𝑏 𝑣𝑎𝑙𝑜𝑟𝑒𝑠
+% 𝑐𝑜𝑛𝑠𝑒𝑐𝑢𝑡𝑖𝑣𝑜𝑠 𝑑𝑒 𝑙𝑎 𝑓𝑢𝑛𝑐𝑖ó𝑛 para buscar los ceros del grupo de datos. 
+% Teniendo en cuenta que el cruce por cero se puede obtener interpolando 
+% linealmente los dos valores o eligiendo el más cercano al cero
 %----------------------------------------------------------------
 %% Gráfica de Datos
 %plot(database)
