@@ -71,11 +71,26 @@ fprintf('(3) La Coeficiente de variación del dólar es: %.4f\n', coeficiente_va
 % 𝑡í𝑝𝑖𝑐𝑎 𝑦 𝑥̅ 𝑙𝑎 𝑚𝑒𝑑𝑖𝑎 𝑑𝑒𝑙 𝑐𝑜𝑛𝑗𝑢𝑛𝑡𝑜 𝑑𝑒 𝑜𝑏𝑠𝑒𝑟𝑣𝑎𝑑𝑜𝑟𝑒𝑠), 
     coeficiente_pearson = (desviacion_estandar/media_aritmetica)*100;
 fprintf('(3) La Coeficiente de variación de Pearson del dólar es: %.2f\n', coeficiente_pearson);
-% coeficiente de apertura (𝐶𝐴𝑃 = 𝑚á𝑥{𝑥𝑖} 𝑚í𝑛{𝑥𝑖}), coeficiente de asimetría (𝐴𝑆 = 𝑋̅− 𝑀0 𝑆, 𝑋̅ 𝑒𝑠 𝑙𝑎 
-% 𝑚𝑒𝑑𝑖𝑎 𝑎𝑟𝑖𝑡𝑚é𝑡𝑖𝑐𝑎, 𝑀0 𝑒𝑠 𝑙𝑎 𝑚𝑜𝑑𝑎 𝑦 𝑆 𝑒𝑠 𝑙𝑎 𝑑𝑒𝑠𝑣𝑖𝑎𝑐𝑖ó𝑛 𝑒𝑠𝑡á𝑛𝑑𝑎𝑟), kurtosis, 
-% la convolución y la correlación. También deben calcular el número de 
-% índice, la tasa, el coeficiente de Gini y el coeficiente de correlación 
-% lineal.
+% coeficiente de apertura (𝐶𝐴𝑃 = 𝑚á𝑥{𝑥𝑖} 𝑚í𝑛{𝑥𝑖}), 
+%fechas = dolarhisto,Fecha;
+%aperturas = dolarhisto,Apertura;
+%media_aperturas = mean(aperturas);
+%disp(media_aperturas);
+% coeficiente de asimetría (𝐴𝑆 = 𝑋̅− 𝑀0/𝑆, 𝑋̅ 𝑒𝑠 𝑙𝑎 𝑚𝑒𝑑𝑖𝑎 𝑎𝑟𝑖𝑡𝑚é𝑡𝑖𝑐𝑎, 
+% 𝑀0 𝑒𝑠 𝑙𝑎 𝑚𝑜𝑑𝑎 𝑦 𝑆 𝑒𝑠 𝑙𝑎 𝑑𝑒𝑠𝑣𝑖𝑎𝑐𝑖ó𝑛 𝑒𝑠𝑡á𝑛𝑑𝑎𝑟), 
+coef_asimetria = skewness(dolar)
+%disp(coef_asimetria);
+coefi_asimetria = ((media_aritmetica-moda)/desviacion_estandar)
+% kurtosis, 
+k = kurtosis(dolar)
+%kurtosis poblacional
+ku = kurtosis(dolar, 0)
+% la convolución y la correlación. 
+%cambio_dolar = dolarhisto.Cambio_dolar;
+% También deben calcular el número de índice, 
+% la tasa, 
+% el coeficiente de Gini  
+% el coeficiente de correlación lineal.
 
 %----------------------------------------------------------------
 %% Lugar de Raíces (Cruces x Cero), Máximos Relativos y Mínimos Relativos
