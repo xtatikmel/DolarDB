@@ -142,11 +142,17 @@ hold on;
 [data,header] = xlsread('DB Datos.xlsx',1);
 fecha = datetime(header(2:end,1),'InputFormat','dd/MM/yyyy');
 plot(fecha,database)
+hold off;
 datetick('x','yyyy');
 xlabel('Tiempo (Años)');
 ylabel('Cambio Dolar (Pesos)');
+yline(1754.89,'--')
+yline(5061.21,'--')
 title('Variación del dolar con el tiempo');
-hold off;
+legend('Dolar','Max-Min')
+grid on;
+figure;
+histogram(dolar);
 %----------------------------------------------------------------
 load DolarDB.mat;
 save DolarDB;
