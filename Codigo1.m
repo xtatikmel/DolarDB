@@ -8,7 +8,7 @@ datetime
     dolar = xlsread ('DB Datos.xlsx',-1);
     [num,txt,raw] = xlsread('HistoricoDolar.xlsx');
     %Warning
-    save;
+    save DolarDB txt;
     dolarhisto = readtable('HistoricoDolar.xlsx');
     filename = 'DB Datos.xlsx';
     sheet = 'Hoja1';
