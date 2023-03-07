@@ -2,6 +2,7 @@
 clc
 clear all
 datetime
+%
 %archivo = 'HistoricoDolar.xlsx';
 %historico = xlsread(archivo,-1);
 database = xlsread ('DB Datos.xlsx');
