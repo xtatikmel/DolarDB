@@ -6,15 +6,12 @@ datetime
 %historico = xlsread(archivo,-1);
 database = xlsread ('DB Datos.xlsx');
 dolar = xlsread ('DB Datos.xlsx',-1);
-
 [num,txt,raw] = xlsread('HistoricoDolar.xlsx');
 dolarhisto = readtable('HistoricoDolar.xlsx');
+% Lee los datos del archivo
 filename = 'DB Datos.xlsx';
 sheet = 'Hoja1';
-
-% Lee los datos del archivo
 [nume, txt, raw] = xlsread(filename, sheet);
-
 % Extrae las fechas de la primera y última fila
 primera_fecha = raw{2, 1};
 ultima_fecha = raw{end, 1}; 
@@ -23,9 +20,9 @@ primer_valor = raw{2, 2};
 ultimo_valor = raw{end, 2}; 
 % Muestra las fechas en la ventana de comandos
 disp(['La primera fecha tomada fue: ', primera_fecha]);
-fprintf('(3)Y el precio del dolar era:  %.2f\n', primer_valor);
+fprintf('Y el precio del dolar era:  %.2f\n', primer_valor);
 disp(['La última fecha tomada fue: ', ultima_fecha]);
-fprintf('(3)Y el precio del dolar era:  %.2f\n', ultimo_valor);
+fprintf('Y el precio del dolar era:  %.2f\n', ultimo_valor);
 %----------------------------------------------------------------
 %% Análisis Estadístico
 %%% (1) Calcular el promedio de los datos, y restar el valor obtenido al
@@ -116,6 +113,9 @@ fprintf('(3) El número de índice es: %.2f\n', indice);
 % el coeficiente de Gini
 
 % El coeficiente de correlación lineal
+
+%Guardar datos arrojados en la hoja "Estadísticas" del archivo 
+% "DB Datos.xlsm"
 xlswrite('DB Datos.xlsx',{'Rango';'Media Aritmética';'Media Geometrica'; ...
     'Media Armonica';'La Mediana';'Moda'},'Estadísticas','A7')
 xlswrite('DB Datos.xlsx',[rango;media_aritmetica;media_geometrica; ...
@@ -138,11 +138,11 @@ xlswrite('DB Datos.xlsx',[rango;media_aritmetica;media_geometrica; ...
 % instrucción subplot en un mismo objeto figure o Graficar los cruces x 
 % cero, los mínimos relativos y los máximos relativos utilizando marcas 
 % y etiquetas (legend)
-hold on;
+%hold on;
 [data,header] = xlsread('DB Datos.xlsx',1);
 fecha = datetime(header(2:end,1),'InputFormat','dd/MM/yyyy');
 plot(fecha,database)
-hold off;
+%hold off;
 datetick('x','yyyy');
 xlabel('Tiempo (Años)');
 ylabel('Cambio Dolar (Pesos)');
@@ -153,6 +153,10 @@ legend('Dolar','Max-Min')
 grid on;
 figure;
 histogram(dolar);
+figure;
+stackedplot(dolarhisto);
+figure;
+bar(data);
 %----------------------------------------------------------------
 load DolarDB.mat;
 save DolarDB;
