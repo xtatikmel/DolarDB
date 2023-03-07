@@ -2,7 +2,7 @@
 clc
 clear all
 datetime
-%
+%https://totoro.banrep.gov.co/analytics/saw.dll?Download&Format=excel2007&Extension=.xlsx&BypassCache=true&path=%2Fshared%2fSeries%20Estad%C3%ADsticas_T%2F1.%20Tasa%20de%20Cambio%20Peso%20Colombiano%2F1.1%20TRM%20-%20Disponible%20desde%20el%2027%20de%20noviembre%20de%201991%2F1.1.1.TCM_Serie%20historica%20IQY&lang=es&SyncOperation=1
 %archivo = 'HistoricoDolar.xlsx';
 %historico = xlsread(archivo,-1);
 database = xlsread ('DB Datos.xlsx');
@@ -12,7 +12,10 @@ dolarhisto = readtable('HistoricoDolar.xlsx');
 % Lee los datos del archivo
 filename = 'DB Datos.xlsx';
 sheet = 'Hoja1';
+Meses = 'Mes';
 [nume, txt, raw] = xlsread(filename, sheet);
+[nums, txt, raw] = xlsread(filename, Meses);
+
 % Extrae las fechas de la primera y última fila
 primera_fecha = raw{2, 1};
 ultima_fecha = raw{end, 1}; 
@@ -139,25 +142,28 @@ xlswrite('DB Datos.xlsx',[rango;media_aritmetica;media_geometrica; ...
 % instrucción subplot en un mismo objeto figure o Graficar los cruces x 
 % cero, los mínimos relativos y los máximos relativos utilizando marcas 
 % y etiquetas (legend)
-%hold on;
+
 [data,header] = xlsread('DB Datos.xlsx',1);
 fecha = datetime(header(2:end,1),'InputFormat','dd/MM/yyyy');
-plot(fecha,database)
-%hold off;
+%hold on;
+plot(fecha,database);
 datetick('x','yyyy');
 xlabel('Tiempo (Años)');
 ylabel('Cambio Dolar (Pesos)');
-yline(1754.89,'--')
-yline(5061.21,'--')
+yline(1754.89,'--');
+yline(5061.21,'--');
 title('Variación del dolar con el tiempo');
-legend('Dolar','Max-Min')
+legend('Dolar','Max-Min');
 grid on;
+%hold off;
 figure;
 histogram(dolar);
 figure;
 stackedplot(dolarhisto);
 figure;
 bar(data);
+figure;
+bar(nums,'DisplayName','nums')
 %----------------------------------------------------------------
 load DolarDB.mat;
 save DolarDB;
