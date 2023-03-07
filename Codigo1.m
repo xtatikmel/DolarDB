@@ -142,5 +142,9 @@ fprintf('(3) El número de índice es: %.2f\n', indice);
 % cero, los mínimos relativos y los máximos relativos utilizando marcas 
 % y etiquetas (legend)
 
+%hold on;
+%plot(Registro,%x’);
+%fplot(%x+3’,[1 6]);
+%hold off;
 
 %----------------------------------------------------------------
