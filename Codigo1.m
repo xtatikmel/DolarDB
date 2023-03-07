@@ -36,16 +36,16 @@ fprintf('(3)Y el precio del dolar era:  %.2f\n', ultimo_valor);
     promedio_cambio = mean(cambio_diario);
 fprintf('(1) El promedio del dólar es: %.2f\n', promedio);
 fprintf('(1) El cambio promedio del dólar es: %.8f\n', promedio_cambio);
-xlswrite('DB Datos.xlsx',{'Promedio';'cambio_diario';'promedio_cambio'},'Estadísticas','B2')
-xlswrite('DB Datos.xlsx',[promedio;cambio_diario;promedio_cambio],'Estadísticas','C2')
+xlswrite('DB Datos.xlsx',{'Promedio';'cambio_diario';'promedio_cambio'},'Estadísticas','A2')
+xlswrite('DB Datos.xlsx',[promedio;cambio_diario;promedio_cambio],'Estadísticas','B2')
 
 %%% (2)Identificar el valor máximo y mínimo de la función
     mx = max(database);
 fprintf('(2) El valor maximo del dólar es: %.2f\n', mx);
     mn = min(database);
 fprintf('(2) El valor minimo del dólar es: %.2f\n', mn);
-xlswrite('DB Datos.xlsx',{'valor maximo';'valor minimo'},'Estadísticas','B5')
-xlswrite('DB Datos.xlsx',[mx;mn],'Estadísticas','C5')
+xlswrite('DB Datos.xlsx',{'valor maximo';'valor minimo'},'Estadísticas','A5')
+xlswrite('DB Datos.xlsx',[mx;mn],'Estadísticas','B5')
 %----------------------------------------------------------------
 
 %%% (3) Calcular el rango,
@@ -117,9 +117,9 @@ fprintf('(3) El número de índice es: %.2f\n', indice);
 
 % El coeficiente de correlación lineal
 xlswrite('DB Datos.xlsx',{'Rango';'Media Aritmética';'Media Geometrica'; ...
-    'Media Armonica';'La Mediana';'Moda'},'Estadísticas','B7')
+    'Media Armonica';'La Mediana';'Moda'},'Estadísticas','A7')
 xlswrite('DB Datos.xlsx',[rango;media_aritmetica;media_geometrica; ...
-    media_armonica;mediana;moda],'Estadísticas','C7')
+    media_armonica;mediana;moda],'Estadísticas','B7')
 %----------------------------------------------------------------
 %% Lugar de Raíces (Cruces x Cero), Máximos Relativos y Mínimos Relativos
 % Utilizar la instrucción "find" o el "Teorema de Boltzman" 
