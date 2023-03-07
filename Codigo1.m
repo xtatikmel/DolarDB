@@ -25,10 +25,10 @@ ultimo_valor = raw{end, 2}; % asumiendo que la fecha está en la columna 1 y la 
 % Muestra las fechas en la ventana de comandos
 disp(['La primera fecha es: ', primera_fecha]);
 %disp(['Y el precio del dolar es: ', primer_valor]);
-fprintf('(3)Y el precio del dolar es:  %.2f\n', primer_valor);
+fprintf('(3)Y el precio del dolar era:  %.2f\n', primer_valor);
 disp(['La última fecha es: ', ultima_fecha]);
 %disp(['Y el precio del dolar es: ', ultimo_valor]);
-fprintf('(3)Y el precio del dolar es:  %.2f\n', ultimo_valor);
+fprintf('(3)Y el precio del dolar era:  %.2f\n', ultimo_valor);
 %----------------------------------------------------------------
 %% Análisis Estadístico
 %%% (1) Calcular el promedio de los datos, y restar el valor obtenido al
@@ -141,6 +141,5 @@ fprintf('(3) El número de índice es: %.2f\n', indice);
 % cero, los mínimos relativos y los máximos relativos utilizando marcas 
 % y etiquetas (legend)
 
-%----------------------------------------------------------------
 
 %----------------------------------------------------------------
