@@ -4,31 +4,27 @@ clear all
 datetime
 %archivo = 'HistoricoDolar.xlsx';
 %historico = xlsread(archivo,-1);
-    database = xlsread ('DB Datos.xlsx');
-    dolar = xlsread ('DB Datos.xlsx',-1);
-    [num,txt,raw] = xlsread('HistoricoDolar.xlsx');
-    %Warning
-    save DolarDB txt;
-    dolarhisto = readtable('HistoricoDolar.xlsx');
-    filename = 'DB Datos.xlsx';
-    sheet = 'Hoja1';
+database = xlsread ('DB Datos.xlsx');
+dolar = xlsread ('DB Datos.xlsx',-1);
+
+[num,txt,raw] = xlsread('HistoricoDolar.xlsx');
+dolarhisto = readtable('HistoricoDolar.xlsx');
+filename = 'DB Datos.xlsx';
+sheet = 'Hoja1';
 
 % Lee los datos del archivo
 [nume, txt, raw] = xlsread(filename, sheet);
-%[Fecha,dolar] = xlsread('DB Datos.xlsx')
-% Extrae las fechas de la primera y última fila
-primera_fecha = raw{2, 1}; % asumiendo que la fecha está en la columna 1 y la primera fila de datos está en la fila 2
-ultima_fecha = raw{end, 1}; % asumiendo que la fecha está en la columna 1 y la última fila de datos es la última fila en el archivo
-% Extrae los precios de la primera y última fila
-primer_valor = raw{2, 2}; % asumiendo que la fecha está en la columna 1 y la primera fila de datos está en la fila 2
-ultimo_valor = raw{end, 2}; % asumiendo que la fecha está en la columna 1 y la última fila de datos es la última fila en el archivo
 
+% Extrae las fechas de la primera y última fila
+primera_fecha = raw{2, 1};
+ultima_fecha = raw{end, 1}; 
+% Extrae los precios de la primera y última fila
+primer_valor = raw{2, 2}; 
+ultimo_valor = raw{end, 2}; 
 % Muestra las fechas en la ventana de comandos
 disp(['La primera fecha tomada fue: ', primera_fecha]);
-%disp(['Y el precio del dolar es: ', primer_valor]);
 fprintf('(3)Y el precio del dolar era:  %.2f\n', primer_valor);
 disp(['La última fecha tomada fue: ', ultima_fecha]);
-%disp(['Y el precio del dolar es: ', ultimo_valor]);
 fprintf('(3)Y el precio del dolar era:  %.2f\n', ultimo_valor);
 %----------------------------------------------------------------
 %% Análisis Estadístico
@@ -40,19 +36,22 @@ fprintf('(3)Y el precio del dolar era:  %.2f\n', ultimo_valor);
     promedio_cambio = mean(cambio_diario);
 fprintf('(1) El promedio del dólar es: %.2f\n', promedio);
 fprintf('(1) El cambio promedio del dólar es: %.8f\n', promedio_cambio);
+xlswrite('DB Datos.xlsx',{'Promedio';'cambio_diario';'promedio_cambio'},'Estadísticas','B2')
+xlswrite('DB Datos.xlsx',[promedio;cambio_diario;promedio_cambio],'Estadísticas','C2')
 
 %%% (2)Identificar el valor máximo y mínimo de la función
     mx = max(database);
 fprintf('(2) El valor maximo del dólar es: %.2f\n', mx);
     mn = min(database);
 fprintf('(2) El valor minimo del dólar es: %.2f\n', mn);
-xlswrite('DB Datos.xlsx',{'rango';'media'},'Estadísticas','B2')
-%xlswrite('DB Datos.xlsx',[rango;'media'],'Estadísticas','C2')
+xlswrite('DB Datos.xlsx',{'valor maximo';'valor minimo'},'Estadísticas','B5')
+xlswrite('DB Datos.xlsx',[mx;mn],'Estadísticas','C5')
 %----------------------------------------------------------------
 
 %%% (3) Calcular el rango,
     rango = range(database);
 fprintf('(3) El valor rango del dólar es: %.2f\n', rango);
+
 % la media (aritmética, geométrica y armónica),
     media = mean(dolar);
     media_aritmetica = mean(dolar);
@@ -117,7 +116,10 @@ fprintf('(3) El número de índice es: %.2f\n', indice);
 % el coeficiente de Gini
 
 % El coeficiente de correlación lineal
-
+xlswrite('DB Datos.xlsx',{'Rango';'Media Aritmética';'Media Geometrica'; ...
+    'Media Armonica';'La Mediana';'Moda'},'Estadísticas','B7')
+xlswrite('DB Datos.xlsx',[rango;media_aritmetica;media_geometrica; ...
+    media_armonica;mediana;moda],'Estadísticas','C7')
 %----------------------------------------------------------------
 %% Lugar de Raíces (Cruces x Cero), Máximos Relativos y Mínimos Relativos
 % Utilizar la instrucción "find" o el "Teorema de Boltzman" 
@@ -132,19 +134,25 @@ fprintf('(3) El número de índice es: %.2f\n', indice);
 %----------------------------------------------------------------
 %% Gráfica de Datos
 %Graficar el conjunto de datos con ayuda del comando subplot, plot y fplot 
-% (Ver ejemplo a continuación)
-%hold on;
-%plot(Registro,%x’);
-%fplot(%x+3’,[1 6]);
-%hold off;
 %o Graficar los datos reales y los datos modificados con ayuda de la 
 % instrucción subplot en un mismo objeto figure o Graficar los cruces x 
 % cero, los mínimos relativos y los máximos relativos utilizando marcas 
 % y etiquetas (legend)
-
-%hold on;
-%plot(Registro,%x’);
-%fplot(%x+3’,[1 6]);
-%hold off;
-
+hold on;
+[data,header] = xlsread('DB Datos.xlsx',1);
+fecha = datetime(header(2:end,1),'InputFormat','dd/MM/yyyy');
+plot(fecha,database)
+hold off;
+datetick('x','yyyy');
+xlabel('Tiempo (Años)');
+ylabel('Cambio Dolar (Pesos)');
+yline(1754.89,'--')
+yline(5061.21,'--')
+title('Variación del dolar con el tiempo');
+legend('Dolar','Max-Min')
+grid on;
+figure;
+histogram(dolar);
 %----------------------------------------------------------------
+load DolarDB.mat;
+save DolarDB;
