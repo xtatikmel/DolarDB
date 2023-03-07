@@ -23,10 +23,10 @@ primer_valor = raw{2, 2}; % asumiendo que la fecha está en la columna 1 y la pr
 ultimo_valor = raw{end, 2}; % asumiendo que la fecha está en la columna 1 y la última fila de datos es la última fila en el archivo
 
 % Muestra las fechas en la ventana de comandos
-disp(['La primera fecha es: ', primera_fecha]);
+disp(['La primera fecha tomada fue: ', primera_fecha]);
 %disp(['Y el precio del dolar es: ', primer_valor]);
 fprintf('(3)Y el precio del dolar era:  %.2f\n', primer_valor);
-disp(['La última fecha es: ', ultima_fecha]);
+disp(['La última fecha tomada fue: ', ultima_fecha]);
 %disp(['Y el precio del dolar es: ', ultimo_valor]);
 fprintf('(3)Y el precio del dolar era:  %.2f\n', ultimo_valor);
 %----------------------------------------------------------------
