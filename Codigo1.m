@@ -134,11 +134,6 @@ xlswrite('DB Datos.xlsx',[rango;media_aritmetica;media_geometrica; ...
 %----------------------------------------------------------------
 %% Gráfica de Datos
 %Graficar el conjunto de datos con ayuda del comando subplot, plot y fplot 
-% (Ver ejemplo a continuación)
-%hold on;
-%plot(Registro,%x’);
-%fplot(%x+3’,[1 6]);
-%hold off;
 %o Graficar los datos reales y los datos modificados con ayuda de la 
 % instrucción subplot en un mismo objeto figure o Graficar los cruces x 
 % cero, los mínimos relativos y los máximos relativos utilizando marcas 
