@@ -48,11 +48,9 @@ fprintf('(2) El valor minimo del dólar es: %.2f\n', mn);
 xlswrite('DB Datos.xlsx',{'valor maximo';'valor minimo'},'Estadísticas','A5')
 xlswrite('DB Datos.xlsx',[mx;mn],'Estadísticas','B5')
 %----------------------------------------------------------------
-
 %%% (3) Calcular el rango,
     rango = range(database);
 fprintf('(3) El valor rango del dólar es: %.2f\n', rango);
-
 % la media (aritmética, geométrica y armónica),
     media = mean(dolar);
     media_aritmetica = mean(dolar);
