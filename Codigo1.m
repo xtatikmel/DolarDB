@@ -154,12 +154,57 @@ xlswrite('DB Datos.xlsx',[rango;media_aritmetica;media_geometrica; ...
 % Utilizar la instrucción "find" o el "Teorema de Boltzman" 
 % 𝑓(𝑎) ∗ 𝑓(𝑏) < 0, 𝑐𝑜𝑛 𝑎, 𝑏 𝑣𝑎𝑙𝑜𝑟𝑒𝑠
 % 𝑐𝑜𝑛𝑠𝑒𝑐𝑢𝑡𝑖𝑣𝑜𝑠 𝑑𝑒 𝑙𝑎 𝑓𝑢𝑛𝑐𝑖ó𝑛 para buscar los ceros del grupo de datos. 
+axisy = database;
+
+y_normalized = axisy - promedio;
 % Teniendo en cuenta que el cruce por cero se puede obtener interpolando 
 % linealmente los dos valores o eligiendo el más cercano al cero
 % Identificar los máximos relativos con coordenadas 
 % (𝑏, 𝑓(𝑏)) 𝑓(𝑎) < 𝑓(𝑏) < 𝑓(𝑐), 𝑐𝑜𝑛 𝑎, 𝑏, 𝑐 𝑣𝑎𝑙𝑜𝑟𝑒𝑠 𝑐𝑜𝑛𝑠𝑒𝑐𝑢𝑡𝑖𝑣𝑜𝑠 𝑑𝑒 𝑙𝑎 𝑓𝑢𝑛𝑐𝑖ó𝑛
 % Identificar los mínimos relativos con coordenadas 
 % (𝑏, 𝑓(𝑏))𝑓(𝑎) > 𝑓(𝑏) > 𝑓(𝑐), 𝑐𝑜𝑛 𝑎, 𝑏, 𝑐 𝑣𝑎𝑙𝑜𝑟𝑒𝑠 𝑐𝑜𝑛𝑠𝑒𝑐𝑢𝑡𝑖𝑣𝑜𝑠 𝑑𝑒 𝑙𝑎 𝑓𝑢𝑛𝑐𝑖ó𝑛
+YMax = [];YMin = [];
+for (I = 1: length(y_normalized)-2)
+    % Máximos Relativos
+    if(y_normalized(I) < y_normalized(I+1) && y_normalized(I+1) > y_normalized(I+2))
+        YMax = [YMax I+1]
+    end
+
+    % Mínimos Relativos
+    if(y_normalized(I) > y_normalized(I+1) && y_normalized(I+1) < y_normalized(I+2))
+        YMin = [YMin I+1]
+    end
+end
+
+[~,MaxAbsolute] = max(y_normalized)
+[~,MinAbsolute] = min(y_normalized)
+
+CrucesZero = [];
+for (I = 1:length(y_normalized)-1)
+    if(y_normalized(I)*y_normalized(I+1) < 0)
+        if(abs(y_normalized(I)) < abs(y_normalized(I+1)))
+            CrucesZero = [CrucesZero I];
+        else
+            CrucesZero = [CrucesZero I+1];
+        end
+    end
+
+end
+
+
+subplot(2,1,2)
+hold on;
+    plot(X,y_normalized);
+    plot(X(YMax),y_normalized(YMax),'o');% Se grafican los Máximos Relativos
+    plot(X(MaxAbsolute),y_normalized(MaxAbsolute),'+','MarkerSize',12);% Se grafica el Máximo Absoluto
+    plot(X(YMin),y_normalized(YMin),'d');% Se grafican los Mínimos Relativos
+    plot(X(MinAbsolute),y_normalized(MinAbsolute),'s','MarkerSize',12);% Se grafica el Mínimo Absoluto
+
+    % Cruces x Cero de la Señal Normalizada
+    plot(X(CrucesZero),y_normalized(CrucesZero),'x','MarkerSize',12);% Se grafican los Cruces x Cero de la Señal
+hold off;
+grid on;
+
 %----------------------------------------------------------------
 %% Gráfica de Datos
 % Graficar el conjunto de datos con ayuda del comando subplot, plot y fplot 
