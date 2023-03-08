@@ -146,9 +146,9 @@ fprintf('(3) El número de índice es: %.2f\n', indice);
 % Guardar datos arrojados en la hoja "Estadísticas" del archivo 
 % "DB Datos.xlsm"
 xlswrite('DB Datos.xlsx',{'Rango';'Media Aritmética';'Media Geometrica'; ...
-    'Media Armonica';'La Mediana';'Moda'},'Estadísticas','A7')
+    'Media Armonica';'La Mediana';'Moda';'desviasion estandar';'desviacion media';'esperanza';'covarianza';'varianza'; 'varianza2';'coeficiente de variacion';'coeficiente de pearson'; 'coef_asimetria'; 'coefi_asimetria';'kurtosis';'numero de indice'},'Estadísticas','A7')
 xlswrite('DB Datos.xlsx',[rango;media_aritmetica;media_geometrica; ...
-    media_armonica;mediana;moda],'Estadísticas','B7')
+    media_armonica;mediana;moda;desviacion_estandar;desviacion_media;esperanza; varianza; varianza2;coeficiente_variacion;coeficiente_pearson;coefi_asimetria;k;ku;indice;],'Estadísticas','B7')
 %----------------------------------------------------------------
 %% Lugar de Raíces (Cruces x Cero), Máximos Relativos y Mínimos Relativos
 % Utilizar la instrucción "find" o el "Teorema de Boltzman" 
@@ -242,7 +242,7 @@ ylabel('Cambio Dolar (Pesos)');
 %    plot(X(MinAbsolute),y_normalized(MinAbsolute),'s','MarkerSize',12);% Se grafica el Mínimo Absoluto
 
     % Cruces x Cero de la Señal Normalizada
-    plot(axisx(CrucesZero),y_normalized(CrucesZero),'x','MarkerSize',12);% Se grafican los Cruces x Cero de la Señal
+%    plot(axisx(CrucesZero),y_normalized(CrucesZero),'x','MarkerSize',12);% Se grafican los Cruces x Cero de la Señal
 hold off;
 grid on;
 %----------------------------------------------------------------
