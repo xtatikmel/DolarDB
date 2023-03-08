@@ -155,7 +155,7 @@ xlswrite('DB Datos.xlsx',[rango;media_aritmetica;media_geometrica; ...
 % 𝑓(𝑎) ∗ 𝑓(𝑏) < 0, 𝑐𝑜𝑛 𝑎, 𝑏 𝑣𝑎𝑙𝑜𝑟𝑒𝑠
 % 𝑐𝑜𝑛𝑠𝑒𝑐𝑢𝑡𝑖𝑣𝑜𝑠 𝑑𝑒 𝑙𝑎 𝑓𝑢𝑛𝑐𝑖ó𝑛 para buscar los ceros del grupo de datos. 
 axisy = database;
-
+axisx = datetime(raw(2:end,1),'InputFormat','dd/MM/yyyy');
 y_normalized = axisy - promedio;
 % Teniendo en cuenta que el cruce por cero se puede obtener interpolando 
 % linealmente los dos valores o eligiendo el más cercano al cero
@@ -193,17 +193,7 @@ end
 
 
 subplot(2,1,2)
-hold on;
-    plot(X,y_normalized);
-    plot(X(YMax),y_normalized(YMax),'o');% Se grafican los Máximos Relativos
-    plot(X(MaxAbsolute),y_normalized(MaxAbsolute),'+','MarkerSize',12);% Se grafica el Máximo Absoluto
-    plot(X(YMin),y_normalized(YMin),'d');% Se grafican los Mínimos Relativos
-    plot(X(MinAbsolute),y_normalized(MinAbsolute),'s','MarkerSize',12);% Se grafica el Mínimo Absoluto
 
-    % Cruces x Cero de la Señal Normalizada
-    plot(X(CrucesZero),y_normalized(CrucesZero),'x','MarkerSize',12);% Se grafican los Cruces x Cero de la Señal
-hold off;
-grid on;
 
 %----------------------------------------------------------------
 %% Gráfica de Datos
@@ -242,7 +232,19 @@ plot(X,y);
 datetick('x','yyyy');
 xlabel('Tiempo (Meses)');
 ylabel('Cambio Dolar (Pesos)');
-hold off
+%hold off
+%hold on;
+    plot(fecha,y_normalized);
+    datetick('x','yyyy');
+%    plot(X(YMax),y_normalized(YMax),'o');% Se grafican los Máximos Relativos
+%    plot(X(MaxAbsolute),y_normalized(MaxAbsolute),'+','MarkerSize',12);% Se grafica el Máximo Absoluto
+%    plot(X(YMin),y_normalized(YMin),'d');% Se grafican los Mínimos Relativos
+%    plot(X(MinAbsolute),y_normalized(MinAbsolute),'s','MarkerSize',12);% Se grafica el Mínimo Absoluto
+
+    % Cruces x Cero de la Señal Normalizada
+    plot(axisx(CrucesZero),y_normalized(CrucesZero),'x','MarkerSize',12);% Se grafican los Cruces x Cero de la Señal
+hold off;
+grid on;
 %----------------------------------------------------------------
 load DolarDB.mat;
 save DolarDB;
