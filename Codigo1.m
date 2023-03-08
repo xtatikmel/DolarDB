@@ -240,8 +240,7 @@ ylabel('Cambio Dolar (Pesos)');
 %    plot(X(MaxAbsolute),y_normalized(MaxAbsolute),'+','MarkerSize',12);% Se grafica el Máximo Absoluto
 %    plot(X(YMin),y_normalized(YMin),'d');% Se grafican los Mínimos Relativos
 %    plot(X(MinAbsolute),y_normalized(MinAbsolute),'s','MarkerSize',12);% Se grafica el Mínimo Absoluto
-
-    % Cruces x Cero de la Señal Normalizada
+% Cruces x Cero de la Señal Normalizada
 %    plot(axisx(CrucesZero),y_normalized(CrucesZero),'x','MarkerSize',12);% Se grafican los Cruces x Cero de la Señal
 hold off;
 grid on;
