@@ -1,4 +1,4 @@
-% GINI computes the Gini coefficient and the Lorentz curve.
+% GINI calcula el coeficiente de Gini y la curva de Lorentz.
 %
 % Usage:
 %   g = gini(pop,val)
@@ -57,8 +57,9 @@
 %   from the  45 degree line. By construction, the Lorenz curve is weakly
 %   convex and increasing.
 %
-%   The two concepts are related as follows: The Gini coefficient is twice
-%   the area between the 45 degree line and the Lorentz curve.
+%   Los dos conceptos se relacionan de la siguiente manera: El coeficiente
+%   de Gini es el doble del área entre la línea de 45 grados y la curva 
+%   de Lorentz.
 %
 % Author : Yvan Lengwiler
 % Release: $1.0$
@@ -66,20 +67,20 @@
 
 function [g,l,a] = gini(pop,val,makeplot)
 
-    % check arguments
+    % verificar argumentos
 
-    assert(nargin >= 2, 'gini expects at least two arguments.')
+    assert(nargin >= 2, 'Gini espera al menos dos argumentos.')
 
     if nargin < 3
         makeplot = false;
     end
     assert(numel(pop) == numel(val), ...
-        'gini expects two equally long vectors (%d ~= %d).', ...
+        'gini espera dos vectores de igual tamaño (%d ~= %d).', ...
         size(pop,1),size(val,1))
 
-    pop = [0;pop(:)]; val = [0;val(:)];     % pre-append a zero
+    pop = [0;pop(:)]; val = [0;val(:)];     % añadir previamente un cero
 
-    isok = all(~isnan([pop,val]'))';        % filter out NaNs
+    isok = all(~isnan([pop,val]'))';        % filtrar salidas NaNs
     if sum(isok) < 2
         warning('gini:lacking_data','not enough data');
         g = NaN; l = NaN(1,4);
@@ -88,41 +89,41 @@ function [g,l,a] = gini(pop,val,makeplot)
     pop = pop(isok); val = val(isok);
     
     assert(all(pop>=0) && all(val>=0), ...
-        'gini expects nonnegative vectors (neg elements in pop = %d, in val = %d).', ...
+        'gini espera vectores no negativos (neg elements in pop = %d, in val = %d).', ...
         sum(pop<0),sum(val<0))
     
-    % process input
+    % entrada de proceso
     z = val .* pop;
     [~,ord] = sort(val);
     pop    = pop(ord);     z    = z(ord);
     pop    = cumsum(pop);  z    = cumsum(z);
     relpop = pop/pop(end); relz = z/z(end);
     
-    % Gini coefficient
+    % Coeficiente de Gini
 
-    % We compute the area below the Lorentz curve. We do this by
-    % computing the average of the left and right Riemann-like sums.
-    % (I say Riemann-'like' because we evaluate not on a uniform grid, but
-    % on the points given by the pop data).
+    % Calculamos el área debajo de la curva de Lorentz. Hacemos esto 
+    % calculando el promedio de las sumas tipo Riemann izquierda y derecha.
+    % (Se dice Riemann-'like' porque evaluamos no en una cuadrícula 
+    % uniforme, sino en los puntos dados por los datos emergentes).
     %
-    % These are the two Rieman-like sums:
+    % Estas son las dos sumas tipo Rieman:
     %    leftsum  = sum(relz(1:end-1) .* diff(relpop));
     %    rightsum = sum(relz(2:end)   .* diff(relpop));
-    % The Gini coefficient is one minus twice the average of leftsum and
-    % rightsum. We can put all of this into one line.
+    % El coeficiente de Gini es uno menos el doble del promedio de la suma 
+    % izquierda y la suma derecha. Podemos poner todo esto en una línea.
     g = 1 - sum((relz(1:end-1)+relz(2:end)) .* diff(relpop));
     
-    % Lorentz curve
+    % Curva de Lorentz
     l = [relpop,relz];
     a = [pop,z];
-    if makeplot   % ... plot it?
-        area(relpop,relz,'FaceColor',[0.5,0.5,1.0]);    % the Lorentz curve
+    if makeplot   % ... ¿trazarlo?
+        area(relpop,relz,'FaceColor',[0.5,0.5,1.0]);    % la curva de Lorentz
         hold on
-        plot([0,1],[0,1],'--k');                        % 45 degree line
-        axis tight      % ranges of abscissa and ordinate are by definition exactly [0,1]
-        axis square     % both axes should be equally long
-        set(gca,'XTick',get(gca,'YTick'))   % ensure equal ticking
-        set(gca,'Layer','top');             % grid above the shaded area
+        plot([0,1],[0,1],'--k');                        % línea de 45 grados
+        axis tight      % rangos de abscisas y ordenadas son por definición exactamente [0,1]
+        axis square     % ambos ejes deben tener la misma longitud
+        set(gca,'XTick',get(gca,'YTick'))   % garantizar la igualdad de tic-tac (ticking)
+        set(gca,'Layer','top');             % cuadrícula sobre el área sombreada
         grid on;
         title(['\bfGini coefficient = ',num2str(g)]);
         xlabel('share of population');
