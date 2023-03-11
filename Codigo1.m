@@ -184,8 +184,10 @@ plot(fecha,database);
     ylabel('Cambio Dolar (Pesos)');
     yline(1754.89,'--');
     yline(5061.21,'--');
+    yline(MinAbsolute,':');
+      yline(MaxAbsolute,':');
     title('Variación del dolar con el tiempo');
-    legend('Dolar','Max-Min');
+    legend('Dolar','Max-Min','MAX-MIN');
     grid on;
 %hold off;
 figure;
@@ -206,16 +208,20 @@ hold on;
     xlabel('Tiempo (Meses)');
     ylabel('Cambio Dolar (Pesos)');
 %hold off
-    subplot(2,1,2)
+  %  subplot(2,1,2)
 %hold on;
-    plot(fecha,y_normalized);
-    datetick('x','yyyy');
-%    plot(X(YMax),y_normalized(YMax),'o');% Se grafican los Máximos Relativos
+figure;
+   plot(fecha,y_normalized,fecha,database);  
+    datetick('x','yyyy');    
+     yline(MinAbsolute,'--');
+      yline(MaxAbsolute,'--');
+%      yline(CrucesZero,':');
+  % plot(fecha,y_normalized(YMax),'o');% Se grafican los Máximos Relativos
 %    plot(X(MaxAbsolute),y_normalized(MaxAbsolute),'+','MarkerSize',12);% Se grafica el Máximo Absoluto
 %    plot(X(YMin),y_normalized(YMin),'d');% Se grafican los Mínimos Relativos
 %    plot(X(MinAbsolute),y_normalized(MinAbsolute),'s','MarkerSize',12);% Se grafica el Mínimo Absoluto
 % Cruces x Cero de la Señal Normalizada
-%    plot(axisx(CrucesZero),y_normalized(CrucesZero),'x','MarkerSize',12);% Se grafican los Cruces x Cero de la Señal
+ %  plot(axisx(CrucesZero),y_normalized(CrucesZero),'x','MarkerSize',12);% Se grafican los Cruces x Cero de la Señal
     hold off;
     grid on;
 %----------------------------------------------------------------
