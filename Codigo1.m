@@ -1,9 +1,11 @@
 %% Carga de datos y generación de archivos
-clc
-clear all
-datetime
+
+%%% Participantes Grupo 4.
+%%% Juan Camilo Gomez Osorio, Juan Camilo Ocampo Agudelo y Jeferson Guevara Garcia.
+
 %%% Fuente de la Base de datos.
 % https://totoro.banrep.gov.co/analytics/saw.dll?Download&Format=excel2007&Extension=.xlsx&BypassCache=true&path=%2Fshared%2fSeries%20Estad%C3%ADsticas_T%2F1.%20Tasa%20de%20Cambio%20Peso%20Colombiano%2F1.1%20TRM%20-%20Disponible%20desde%20el%2027%20de%20noviembre%20de%201991%2F1.1.1.TCM_Serie%20historica%20IQY&lang=es&SyncOperation=1
+%%%  URL: http://dolar.wilkinsonpc.com.co/dolar-historico.html, http://www.colombia.com/colombiainfo/estadisticas/dolar.asp, http://www.banrep.gov.co/es/tasa-cambio-del-peso-colombiano-trm
     database = xlsread ('DB Datos.xlsx');
     dolar = xlsread ('DB Datos.xlsx',-1);
     [num,txt,raw] = xlsread('HistoricoDolar.xlsx');
@@ -27,6 +29,8 @@ datetime
         fprintf('Y el precio del dolar era:  %.2f\n', primer_valor);
         disp(['La última fecha tomada fue: ', ultima_fecha]);
         fprintf('Y el precio del dolar era:  %.2f\n', ultimo_valor);
+load DolarDB.mat;
+save DolarDB;
 %----------------------------------------------------------------
 %% Análisis Estadístico
 %%% (1) Calcular el promedio de los datos, y restar el valor obtenido al conjunto de datos.
@@ -92,7 +96,8 @@ datetime
     coeficiente_pearson = (desviacion_estandar/media_aritmetica)*100;
         fprintf('(3) La Coeficiente de variación de Pearson del dólar es: %.2f\n', coeficiente_pearson);
 %%% coeficiente de apertura (𝐶𝐴𝑃 = 𝑚á𝑥{𝑥𝑖} 𝑚í𝑛{𝑥𝑖}), 
-
+        cap = mx/mn;
+         fprintf('(3) El Coeficiente de apertura es: %.2f\n', cap);
 %%% coeficiente de asimetría (𝐴𝑆 = 𝑋̅− 𝑀0/𝑆, 𝑋̅ 𝑒𝑠 𝑙𝑎 𝑚𝑒𝑑𝑖𝑎 𝑎𝑟𝑖𝑡𝑚é𝑡𝑖𝑐𝑎, 
 % 𝑀0 𝑒𝑠 𝑙𝑎 𝑚𝑜𝑑𝑎 𝑦 𝑆 𝑒𝑠 𝑙𝑎 𝑑𝑒𝑠𝑣𝑖𝑎𝑐𝑖ó𝑛 𝑒𝑠𝑡á𝑛𝑑𝑎𝑟), 
     coef_asimetria = skewness(dolar);
@@ -106,30 +111,30 @@ datetime
 %%% Kurtosis poblacional
     ku = kurtosis(dolar, 0);
         fprintf('(3) La kurtosis poblacional es: %.2f\n', ku);
-%%% La convolución y la correlación. 
-
 %%% También deben calcular el número de índice
     indice = (ultimo_valor - primer_valor) / primer_valor * 100;
         fprintf('(3) El número de índice es: %.2f\n', indice);
 %%% La tasa
 tasa_cambio = (ultimo_valor - primer_valor) ./ primer_valor;
         fprintf('(3) La Tasa de cambio es: %.2f\n', tasa_cambio);
-%%% El coeficiente de Gini
-    %g = gini(dolar);
-       % fprintf('(3) El coeficiente de Gini es: %.2f\n', g);
-%%% El coeficiente de correlación lineal
+%%% El coeficiente de Gini se utiliza para identificar el indice de
+%%% desigualda de la poblacion, por lo que no pudimos hallar un paradigma
+%%% para trasponer la base de datos trabajada en dicha funcion. No logramos
+%%% obtener la curva de Lorenz
 
+%%% El coeficiente de correlación lineal
+    dolarp = xlsread('DB Datos.xlsx',Meses,'B2:B377');
+    dolarf = xlsread('DB Datos.xlsx',Meses,'C2:B377');
+    corr = corrcoef(dolarp(:,1), dolarf(:,1));
+    fprintf('(3)  El coeficiente de correlación lineal es: %.2f\n', corr);
 %%% Guardar datos arrojados en la hoja "Estadísticas" del archivo 
 %%% "DB Datos.xlsm"
 xlswrite('DB Datos.xlsx',{'Rango';'Media Aritmética';'Media Geometrica'; ...
     'Media Armonica';'La Mediana';'Moda';'desviasion estandar'; ...
     'desviacion media';'esperanza';'covarianza';'varianza'; 'varianza2'; ...
-    'coeficiente de variacion';'coeficiente de pearson'; 'coef_asimetria'; ...
-    'coefi_asimetria';'kurtosis';'numero de indice'},'Estadísticas','A7')
-xlswrite('DB Datos.xlsx',[rango;media_aritmetica;media_geometrica; ...
-    media_armonica;mediana;moda;desviacion_estandar;desviacion_media; ...
-    esperanza; varianza; varianza2;coeficiente_variacion;coeficiente_pearson; ...
-    coefi_asimetria;k;ku;indice;],'Estadísticas','B7')
+    'coeficiente de variacion';'coeficiente de pearson';'Coeficiente de apertura';'coef_asimetria'; ...
+    'coefi_asimetria';'kurtosis';'numero de indice';'La tasa';'El coeficiente de correlación lineal'},'Estadísticas','A7')
+xlswrite('DB Datos.xlsx',[rango;media_aritmetica;media_geometrica;media_armonica;mediana;moda;desviacion_estandar;desviacion_media;esperanza;varianza;varianza2;coeficiente_variacion;coeficiente_pearson;cap;coefi_asimetria;k;ku;indice;tasa_cambio],'Estadísticas','B7')
 %----------------------------------------------------------------
 %% Lugar de Raíces (Cruces x Cero), Máximos Relativos y Mínimos Relativos
 %%% Utilizar la instrucción "find" o el "Teorema de Boltzman" 
@@ -168,6 +173,7 @@ for (I = 1:length(y_normalized)-1)
     end
 
 end
+
 %----------------------------------------------------------------
 %% Gráfica de Datos
 %%% Graficar el conjunto de datos con ayuda del comando subplot, plot y fplot 
@@ -177,53 +183,60 @@ end
 % y etiquetas (legend)
     [data,header] = xlsread('DB Datos.xlsx',1);
     fecha = datetime(header(2:end,1),'InputFormat','dd/MM/yyyy');
-%hold on;
-plot(fecha,database);
+%%% Grafica de datos originales con sus valores maximos y minimos
+plot(fecha,database,'g');
     datetick('x','yyyy');
     xlabel('Tiempo (Dias)');
-    ylabel('Cambio Dolar (Pesos)');
-    yline(1754.89,'--');
-    yline(5061.21,'--');
-    yline(MinAbsolute,':');
-      yline(MaxAbsolute,':');
-    title('Variación del dolar con el tiempo');
-    legend('Dolar','Max-Min','MAX-MIN');
+    ylabel('Tasa de Cambio del Dolar (Pesos)');
+    yline(mn,'b','--');
+    yline(mx,'r','--');
+    title('Variación del dolar desde 2012');
+    legend('Dolar','Max','Min');
     grid on;
-%hold off;
-figure;
-    histogram(dolar);
-figure;
-    stackedplot(dolarhisto);
-figure;
-    bar(data);
-figure;
-    bar(nums,'DisplayName','nums');
-figure;
-hold on;
-    mes = xlsread('DB Datos.xlsx',Meses,'A2:A377');
-    X = datetime(raw(2:end,1),'InputFormat','dd/MM/yyyy');
-    y = xlsread('DB Datos.xlsx',Meses,'B2:B377');
-    plot(X,y);
-    datetick('x','yyyy');
-    xlabel('Tiempo (Meses)');
-    ylabel('Cambio Dolar (Pesos)');
-%hold off
-  %  subplot(2,1,2)
-%hold on;
+
+%%% Grafica del cambio del dolar Original Vs Normalizado
 figure;
    plot(fecha,y_normalized,fecha,database);  
     datetick('x','yyyy');    
-     yline(MinAbsolute,'--');
-      yline(MaxAbsolute,'--');
-%      yline(CrucesZero,':');
-  % plot(fecha,y_normalized(YMax),'o');% Se grafican los Máximos Relativos
-%    plot(X(MaxAbsolute),y_normalized(MaxAbsolute),'+','MarkerSize',12);% Se grafica el Máximo Absoluto
-%    plot(X(YMin),y_normalized(YMin),'d');% Se grafican los Mínimos Relativos
-%    plot(X(MinAbsolute),y_normalized(MinAbsolute),'s','MarkerSize',12);% Se grafica el Mínimo Absoluto
-% Cruces x Cero de la Señal Normalizada
- %  plot(axisx(CrucesZero),y_normalized(CrucesZero),'x','MarkerSize',12);% Se grafican los Cruces x Cero de la Señal
-    hold off;
+      title('Variación del dolar Vs. Variacion del Dolar Normalizado');
+    legend('Dolar','DolarNormalizado');
     grid on;
+
+%%% Grafica del cambio del dolar Normalizado
+figure;
+  plot(fecha,y_normalized,'m');  
+    datetick('x','yyyy');    
+ yline(0,':');
+  legend('DolarNormalizado','Linea Cero');
+  grid on;
+
+%%% Grafica dividida.
+  figure;
+  subplot(2,1,1);
+        x1 = fecha;
+        y1 = database;
+       plot(x1,y1,'r');
+     title('Variación del dolar');
+        ylabel('Cambio Dolar (Pesos)');
+        xlabel('Tiempo (Años)');
+       grid on;
+   subplot(2,1,2); 
+        y2 = y_normalized;
+        plot(x1,y2,'b')
+         title('Variacion del Dolar Normalizado');
+        ylabel('Cambio Dolar Normalizado (Pesos)');
+        xlabel('Tiempo (Años)');
+    grid on;
+
+%%% Grafica del promdeio del cambio del dolar en meses
+  figure;
+    mes = xlsread('DB Datos.xlsx',Meses,'A2:A377');
+    xi = datetime(raw(2:end,1),'InputFormat','dd/MM/yyyy');
+    yi = xlsread('DB Datos.xlsx',Meses,'B2:B377');
+    plot(xi,yi,'y');
+    datetick('x','yyyy');
+    title('Variación del promedio del dolar desde 1991');
+    xlabel('Tiempo (Meses)');
+    ylabel('Cambio Dolar (Pesos)');
+     grid on;
 %----------------------------------------------------------------
-load DolarDB.mat;
-save DolarDB;
